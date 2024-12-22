@@ -30,6 +30,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:js": "eslint src/**/*.{js,jsx}"
@@ -53,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^13.29.1"
+    "firebase-tools": "^13.29.1",
+    "gh-pages": "^6.2.0"
   }
 }
