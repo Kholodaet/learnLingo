@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# Онлайн Застосунок для Викладачів Мов
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Цей проєкт є застосунком для компанії, що пропонує послуги викладачів для
+вивчення мов онлайн. Застосунок включає три основні сторінки: "Home", "Teachers"
+та "Favorites". Користувач може зареєструватися, авторизуватися, фільтрувати
+викладачів за різними критеріями та додавати викладачів у "Обрані".
 
-## Available Scripts
+## Технології:
 
-In the project directory, you can run:
+- **React.js** для розробки інтерфейсу користувача.
+- **Firebase** для авторизації користувачів та збереження даних.
+- **React Router** для маршрутизації.
+- **React Hook Form** та **Yup** для валідації форм.
 
-### `npm start`
+## Сторінки:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Home**: Сторінка з переліком переваг компанії та посиланням на сторінку
+   "Teachers".
+2. **Teachers**: Сторінка з переліком викладачів, де користувач може фільтрувати
+   викладачів за мовою, рівнем знань та ціною за годину.
+3. **Favorites**: Приватна сторінка для авторизованих користувачів, де вони
+   можуть переглядати викладачів, яких додали в обрані.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Функціональність:
 
-### `npm test`
+- Авторизація користувачів за допомогою **Firebase** (реєстрація, логінізація,
+  логаут).
+- Реалізація карток викладачів, з можливістю додавання до "Обраних" та перегляду
+  детальної інформації.
+- Можливість бронювання пробного заняття через модальне вікно.
+- Інтерактивні фільтри для пошуку викладачів.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Технічне Завдання:
 
-### `npm run build`
+1. Реалізована авторизація через **Firebase**.
+2. Реалізація форм реєстрації та авторизації з валідацією за допомогою
+   **react-hook-form** та **Yup**.
+3. Створена база даних викладачів у **Firebase Realtime Database**.
+4. Картки викладачів з інформацією та можливістю додавання у "Обрані".
+5. Функціонал для фільтрації викладачів за різними критеріями.
+6. Реалізація приватної сторінки "Favorites" для авторизованих користувачів.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Посилання:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Макет](https://www.figma.com/design/dewf5jVviSTuWMMyU3d8Mc/Learn-Lingo?node-id=0-1)
+- [Технічне завдання](https://docs.google.com/document/d/1ZB_MFgnnJj7t7OXtv5hESSwY6xRgVoACZKzgZczWc3Y/edit?tab=t.0)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Встановлення:
 
-### `npm run eject`
+1. Клонуйте цей репозиторій:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   git clone https://github.com/yourusername/your-project.git
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   2. Встановіть залежності:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```npm install
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```
 
-## Learn More
+   3. Запустіть проєкт:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
 
-### Code Splitting
+Деплой:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Проєкт задеплоєний на GitHub Pages.
 
-### Analyzing the Bundle Size
+```
+Ліцензія:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Цей проєкт ліцензується за умовами MIT License.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
