@@ -55,14 +55,14 @@
 
 2. Встановіть залежності:
 
-```npm install
-
+```bash
+ npm install
 ```
 
 3.  Запустіть проєкт:
 
-```npm start
-
+```bash
+  npm start
 ```
 
 **Деплой**:
