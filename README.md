@@ -42,7 +42,7 @@
 
 ## Посилання:
 
-- [Макет](https://www.figma.com/design/dewf5jVviSTuWMMyU3d8Mc/Learn-Lingo?node-id=0-1)
+- [Макет](https://www.figma.com/design/dewf5jVviSTuWMMyU3d8Mc/Learn-Lingo?node-id=0-1&p=f)
 - [Технічне завдання](https://docs.google.com/document/d/1ZB_MFgnnJj7t7OXtv5hESSwY6xRgVoACZKzgZczWc3Y/edit?tab=t.0)
 
 ## Встановлення:
@@ -50,28 +50,21 @@
 1. Клонуйте цей репозиторій:
 
    ```bash
-   git clone https://github.com/yourusername/your-project.git
+   git clone https://github.com/kholodaet/learnlingo/
+
+   2.	Встановіть залежності:
    ```
 
-   2. Встановіть залежності:
+npm install
 
-   ```npm install
+    3.	Запустіть проєкт:
 
-   ```
-
-   3. Запустіть проєкт:
-
-```npm start
-
-```
+npm start
 
 Деплой:
 
 Проєкт задеплоєний на GitHub Pages.
 
-```
 Ліцензія:
 
 Цей проєкт ліцензується за умовами MIT License.
-
-```
