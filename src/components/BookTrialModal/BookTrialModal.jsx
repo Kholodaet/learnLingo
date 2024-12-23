@@ -24,23 +24,23 @@ import {
 } from './BookTrialModal.styled';
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const [nameInputted, setNameInputted] = useState(false);
-  const [emailInputted, setEmailInputted] = useState(false);
-  const [phoneInputted, setPhoneInputted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Додаємо стан для кнопки
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBookingSubmission = async (values, { resetForm }) => {
-    setIsSubmitting(true); // Блокування кнопки
+    console.log('Form submitted with values:', values); // Лог для перевірки значень форми
+    setIsSubmitting(true); // Блокуємо кнопку під час сабміту
     try {
       // Імітація сабміту або виклик API
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      toast.success('Successfully finished!');
-      resetForm(); // Очищення форми
-      handleClose(); // Закриття модального вікна
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Затримка для імітації API запиту
+      console.log('Booking success');
+      toast.success('Successfully finished!'); // Повідомлення про успіх
+      resetForm(); // Очищаємо форму після успішного відправлення
+      handleClose(); // Закриваємо модальне вікно
     } catch (error) {
+      console.error('Error during booking submission:', error); // Лог помилки
       toast.error('Failed to submit the booking. Please try again.');
     } finally {
-      setIsSubmitting(false); // Розблокування кнопки
+      setIsSubmitting(false); // Розблоковуємо кнопку
     }
   };
 
@@ -95,35 +95,47 @@ const BookTrialModal = ({ teacher, handleClose }) => {
                     name="picked"
                     value={option}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   {option}
                 </StyledLabel>
               ))}
-              <ErrorText name="picked" component="div" />
+              {errors.picked && touched.picked && (
+                <ErrorText>{errors.picked}</ErrorText>
+              )}
             </RadioGroup>
             <StyledInput
               name="fullname"
-              placeholder={nameInputted ? '' : 'Full Name'}
-              onFocus={() => setNameInputted(true)}
+              placeholder="Full Name"
               onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.fullname}
             />
-            <ErrorText name="fullname" component="div" />
+            {errors.fullname && touched.fullname && (
+              <ErrorText>{errors.fullname}</ErrorText>
+            )}
             <StyledInput
               type="email"
               name="email"
-              placeholder={emailInputted ? '' : 'Email'}
-              onFocus={() => setEmailInputted(true)}
+              placeholder="Email"
               onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
             />
-            <ErrorText name="email" component="div" />
+            {errors.email && touched.email && (
+              <ErrorText>{errors.email}</ErrorText>
+            )}
             <StyledInput
               type="tel"
               name="phoneNumber"
-              placeholder={phoneInputted ? '' : 'Phone number'}
-              onFocus={() => setPhoneInputted(true)}
+              placeholder="Phone number"
               onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.phoneNumber}
             />
-            <ErrorText name="phoneNumber" component="div" />
+            {errors.phoneNumber && touched.phoneNumber && (
+              <ErrorText>{errors.phoneNumber}</ErrorText>
+            )}
             <StyledButton type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Booking...' : 'Book'}
             </StyledButton>
