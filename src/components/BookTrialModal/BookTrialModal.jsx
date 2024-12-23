@@ -1,8 +1,8 @@
-import { Formik } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { BookingLessonSchema } from 'yupSchemas/BookingLessonSchema';
+import { BookingLessonSchema } from 'yupSchemas/BookingLessonSchema'; // Шлях до вашої схеми валідації
 
 import {
   AvatarContainer,
@@ -21,7 +21,7 @@ import {
   TeacherInfoContainer,
   TeacherName,
   TeacherTitle,
-} from './BookTrialModal.styled';
+} from './BookTrialModal.styled'; // Шлях до файлу стилів
 
 const BookTrialModal = ({ teacher, handleClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,8 +30,12 @@ const BookTrialModal = ({ teacher, handleClose }) => {
     setIsSubmitting(true);
 
     try {
-      console.log('Booking details:', values); // Placeholder for booking logic
-      // Тут має бути ваш код для відправки даних на сервер або інша логіка обробки бронювання
+      console.log('Booking details:', values); // Тут буде ваш код для відправки даних
+
+      // Приклад збереження в localStorage (для демонстрації, в реальному додатку використовуйте бекенд)
+      const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      storedBookings.push(values);
+      localStorage.setItem('bookings', JSON.stringify(storedBookings));
 
       toast.success('Booking successful!');
       resetForm();
@@ -77,18 +81,13 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           email: '',
           phoneNumber: '',
         }}
-        onSubmit={handleBookingSubmission}
         validationSchema={BookingLessonSchema}
+        onSubmit={handleBookingSubmission}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => (
-          <StyledForm onSubmit={handleSubmit}>
+        {(
+          { isSubmitting } // Додано isSubmitting сюди для доступу всередині Form
+        ) => (
+          <Form>
             <RadioGroup role="group" aria-labelledby="my-radio-group">
               {[
                 'Career and business',
@@ -98,61 +97,36 @@ const BookTrialModal = ({ teacher, handleClose }) => {
                 'Culture, travel or hobby',
               ].map(option => (
                 <StyledLabel key={option}>
-                  <RadioInput
-                    type="radio"
-                    name="picked"
-                    value={option}
-                    checked={values.picked === option}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                  <Field type="radio" name="picked" value={option} />
                   {option}
                 </StyledLabel>
               ))}
-              {touched.picked && errors.picked && (
-                <ErrorText>{errors.picked}</ErrorText>
-              )}
+              <ErrorMessage name="picked" component={ErrorText} />
             </RadioGroup>
 
-            <StyledInput
-              name="fullname"
-              placeholder="Full Name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.fullname}
-            />
-            {touched.fullname && errors.fullname && (
-              <ErrorText>{errors.fullname}</ErrorText>
-            )}
+            <Field name="fullname" placeholder="Full Name" as={StyledInput} />
+            <ErrorMessage name="fullname" component={ErrorText} />
 
-            <StyledInput
+            <Field
               type="email"
               name="email"
               placeholder="Email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
+              as={StyledInput}
             />
-            {touched.email && errors.email && (
-              <ErrorText>{errors.email}</ErrorText>
-            )}
+            <ErrorMessage name="email" component={ErrorText} />
 
-            <StyledInput
+            <Field
               type="tel"
               name="phoneNumber"
               placeholder="Phone number"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.phoneNumber}
+              as={StyledInput}
             />
-            {touched.phoneNumber && errors.phoneNumber && (
-              <ErrorText>{errors.phoneNumber}</ErrorText>
-            )}
+            <ErrorMessage name="phoneNumber" component={ErrorText} />
 
             <StyledButton type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Booking...' : 'Book'}
             </StyledButton>
-          </StyledForm>
+          </Form>
         )}
       </Formik>
     </ModalContainer>

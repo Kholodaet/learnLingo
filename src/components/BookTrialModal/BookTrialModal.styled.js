@@ -62,7 +62,8 @@ export const QuestionTitle = styled.h3`
   margin-bottom: 20px;
 `;
 
-export const StyledForm = styled(Form)`
+export const StyledForm = styled.form`
+  // Важливо: styled.form
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -122,12 +123,12 @@ export const RadioInput = styled(Field)`
   }
 `;
 
-export const ErrorText = styled(ErrorMessage)`
+export const ErrorText = styled.div`
+  // Важливо: styled.div
   font-size: 14px;
   color: red;
   margin-top: -10px;
 `;
-
 export const StyledInput = styled(Field)`
   display: flex;
   padding: 16px 18px;
