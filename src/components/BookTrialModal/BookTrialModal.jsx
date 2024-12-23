@@ -27,11 +27,23 @@ const BookTrialModal = ({ teacher, handleClose }) => {
   const [nameInputted, setNameInputted] = useState(false);
   const [emailInputted, setEmailInputted] = useState(false);
   const [phoneInputted, setPhoneInputted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Додаємо стан для кнопки
 
-  const handleBookingSubmission = () => {
-    toast.success('Successfully finished!');
-    handleClose();
+  const handleBookingSubmission = async (values, { resetForm }) => {
+    setIsSubmitting(true); // Блокування кнопки
+    try {
+      // Імітація сабміту або виклик API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      toast.success('Successfully finished!');
+      resetForm(); // Очищення форми
+      handleClose(); // Закриття модального вікна
+    } catch (error) {
+      toast.error('Failed to submit the booking. Please try again.');
+    } finally {
+      setIsSubmitting(false); // Розблокування кнопки
+    }
   };
+
   return (
     <ModalContainer>
       <Header>Book trial lesson</Header>
@@ -62,7 +74,7 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           picked: '',
           fullname: '',
           email: '',
-          phoneNuber: '',
+          phoneNumber: '',
         }}
         onSubmit={handleBookingSubmission}
         validationSchema={BookingLessonSchema}
@@ -70,48 +82,30 @@ const BookTrialModal = ({ teacher, handleClose }) => {
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <StyledForm>
             <RadioGroup role="group" aria-labelledby="my-radio-group">
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Career and business"
-                />
-                Career and business
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Lesson for kids"
-                />
-                Lesson for kids
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput type="radio" name="picked" value="Living abroad" />
-                Living abroad
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Exams and coursework"
-                />
-                Exams and coursework
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Culture, travel or hobby"
-                />
-                Culture, travel or hobby
-              </StyledLabel>
+              {[
+                'Career and business',
+                'Lesson for kids',
+                'Living abroad',
+                'Exams and coursework',
+                'Culture, travel or hobby',
+              ].map(option => (
+                <StyledLabel key={option}>
+                  <RadioInput
+                    type="radio"
+                    name="picked"
+                    value={option}
+                    onChange={handleChange}
+                  />
+                  {option}
+                </StyledLabel>
+              ))}
               <ErrorText name="picked" component="div" />
             </RadioGroup>
             <StyledInput
               name="fullname"
               placeholder={nameInputted ? '' : 'Full Name'}
               onFocus={() => setNameInputted(true)}
+              onChange={handleChange}
             />
             <ErrorText name="fullname" component="div" />
             <StyledInput
@@ -119,16 +113,20 @@ const BookTrialModal = ({ teacher, handleClose }) => {
               name="email"
               placeholder={emailInputted ? '' : 'Email'}
               onFocus={() => setEmailInputted(true)}
+              onChange={handleChange}
             />
             <ErrorText name="email" component="div" />
             <StyledInput
               type="tel"
-              name="phoneNuber"
+              name="phoneNumber"
               placeholder={phoneInputted ? '' : 'Phone number'}
               onFocus={() => setPhoneInputted(true)}
+              onChange={handleChange}
             />
-            <ErrorText name="phoneNuber" component="div" />
-            <StyledButton type="submit">Book</StyledButton>
+            <ErrorText name="phoneNumber" component="div" />
+            <StyledButton type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Booking...' : 'Book'}
+            </StyledButton>
           </StyledForm>
         )}
       </Formik>

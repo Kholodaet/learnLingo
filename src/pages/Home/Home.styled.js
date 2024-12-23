@@ -143,7 +143,9 @@ export const ImageMac = styled.img`
 `;
 
 export const AdvantagesSection = styled.div`
-  background-image: url(${rectangleYellow3});
+  border: 1.5px dashed #f4c550;
+  border-radius: 30px;
+  width: 100%;
   margin-top: 24px;
   width: 100%;
   height: 100%;
@@ -157,8 +159,12 @@ export const AdvantagesSection = styled.div`
   padding-bottom: 30px;
 
   @media screen and (min-width: 768px) {
-    background-image: url(${rectangleYellow});
-    background-size: contain;
+    border: 1.5px dashed v#f4c550;
+    border-radius: 30px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
     height: 100%;
     padding: 25px;
     margin-left: 0px;
