@@ -1,12 +1,12 @@
+import { ErrorMessage, Field, Form } from 'formik';
 import styled from 'styled-components';
 
 export const ModalContainer = styled.div`
-  /* Стилі для контейнера модального вікна */
-  padding: 24px;
-  border-radius: 12px;
-  background-color: #fff;
-  max-width: 540px;
-  width: 100%;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
 `;
 
 export const Header = styled.h2`
@@ -33,8 +33,6 @@ export const AvatarContainer = styled.div`
 
 export const AvatarImage = styled.img`
   border-radius: 50%;
-  width: 44px; /* Додано ширину */
-  height: 44px; /* Додано висоту */
 `;
 
 export const TeacherInfoContainer = styled.div`
@@ -64,8 +62,7 @@ export const QuestionTitle = styled.h3`
   margin-bottom: 20px;
 `;
 
-export const StyledForm = styled.form`
-  // Важливо: styled.form
+export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -86,11 +83,9 @@ export const StyledLabel = styled.label`
   font-size: 16px;
   align-items: center;
   font-weight: 400;
-  cursor: pointer; /* Додано курсор */
 `;
 
-export const RadioInput = styled.input`
-  // Важливо: styled.input
+export const RadioInput = styled(Field)`
   position: relative;
   appearance: none;
   width: 24px;
@@ -117,19 +112,28 @@ export const RadioInput = styled.input`
       background-color: ${({ theme }) => theme.primaryYellow};
     }
   }
+  @keyframes borderChange {
+    from {
+      border: 2px solid #8a8a89;
+    }
+    to {
+      border-color: ${({ theme }) => theme.primaryYellow};
+    }
+  }
 `;
 
-export const ErrorText = styled.div`
-  // Важливо: styled.div
+export const ErrorText = styled(ErrorMessage)`
   font-size: 14px;
   color: red;
   margin-top: -10px;
 `;
 
-export const StyledInput = styled.input`
-  // Важливо: styled.input
+export const StyledInput = styled(Field)`
   display: flex;
   padding: 16px 18px;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
   border-radius: 12px;
   border: 1px solid rgba(18, 20, 23, 0.1);
@@ -137,7 +141,6 @@ export const StyledInput = styled.input`
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  box-sizing: border-box; /* Важливо для коректного відображення padding */
 
   &::placeholder {
     color: ${({ theme }) => theme.primaryBlack};
@@ -145,11 +148,15 @@ export const StyledInput = styled.input`
 
   &:hover {
     border-color: ${({ theme }) => theme.primaryYellow};
+    outline: ${({ theme }) => theme.primaryYellow};
   }
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.primaryYellow};
+  }
+  @media screen and (min-width: 768px) {
+    width: 438px;
   }
 `;
 
@@ -165,14 +172,12 @@ export const StyledButton = styled.button`
   line-height: 1.2;
   color: ${({ theme }) => theme.primaryBlack};
   transition: background-color 0.3s ease;
-  cursor: pointer;
 
   &:hover {
     background: ${({ theme }) => theme.primaryLightYellow};
   }
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
+  @media screen and (min-width: 768px) {
+    width: 438px;
   }
 `;

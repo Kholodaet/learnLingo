@@ -1,5 +1,5 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React from 'react';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { BookingLessonSchema } from 'yupSchemas/BookingLessonSchema';
@@ -21,46 +21,17 @@ import {
   TeacherInfoContainer,
   TeacherName,
   TeacherTitle,
-} from './BookTrialModal.styled'; // Перевірте шлях!
+} from './BookTrialModal.styled';
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const handleBookingSubmission = async (
-    values,
-    { resetForm, setSubmitting }
-  ) => {
-    try {
-      // Імітація успішної відправки (замініть на реальну логіку)
-      console.log('Form submitted:', values);
-      toast.success('Successfully finished!');
-      resetForm();
-      handleClose();
+  const [nameInputted, setNameInputted] = useState(false);
+  const [emailInputted, setEmailInputted] = useState(false);
+  const [phoneInputted, setPhoneInputted] = useState(false);
 
-      // Реальна відправка на сервер (приклад):
-      /*
-      const response = await fetch('/api/booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('Success:', data);
-      toast.success('Booking successful!');
-      resetForm();
-      handleClose();
-      */
-    } catch (error) {
-      console.error('Booking error:', error);
-      toast.error('Failed to submit the booking. Please try again.');
-    } finally {
-      setSubmitting(false); // Важливо для розблокування кнопки
-    }
+  const handleBookingSubmission = (values, { resetForm }) => {
+    toast.success('Successfully finished!');
+    resetForm();
+    handleClose();
   };
 
   return (
@@ -88,60 +59,101 @@ const BookTrialModal = ({ teacher, handleClose }) => {
       <QuestionTitle>
         What is your main reason for learning English?
       </QuestionTitle>
-
       <Formik
         initialValues={{
           picked: '',
           fullname: '',
           email: '',
-          phoneNumber: '',
+          phoneNumber: '', // виправлено помилку в назві
         }}
-        validationSchema={BookingLessonSchema}
         onSubmit={handleBookingSubmission}
+        validationSchema={BookingLessonSchema}
       >
-        {({ isSubmitting, handleSubmit }) => (
-          <StyledForm onSubmit={handleSubmit}>
-            {' '}
-            {/* onSubmit тут! */}
+        {({ values, errors, touched, handleChange, handleBlur, resetForm }) => (
+          <StyledForm>
             <RadioGroup role="group" aria-labelledby="my-radio-group">
-              {[
-                'Career and business',
-                'Lesson for kids',
-                'Living abroad',
-                'Exams and coursework',
-                'Culture, travel or hobby',
-              ].map(option => (
-                <StyledLabel key={option}>
-                  <Field
-                    type="radio"
-                    name="picked"
-                    value={option}
-                    as={RadioInput}
-                  />
-                  {option}
-                </StyledLabel>
-              ))}
-              <ErrorMessage name="picked" component={ErrorText} />
+              <StyledLabel>
+                <RadioInput
+                  type="radio"
+                  name="picked"
+                  value="Career and business"
+                  onChange={handleChange}
+                  checked={values.picked === 'Career and business'}
+                />
+                Career and business
+              </StyledLabel>
+              <StyledLabel>
+                <RadioInput
+                  type="radio"
+                  name="picked"
+                  value="Lesson for kids"
+                  onChange={handleChange}
+                  checked={values.picked === 'Lesson for kids'}
+                />
+                Lesson for kids
+              </StyledLabel>
+              <StyledLabel>
+                <RadioInput
+                  type="radio"
+                  name="picked"
+                  value="Living abroad"
+                  onChange={handleChange}
+                  checked={values.picked === 'Living abroad'}
+                />
+                Living abroad
+              </StyledLabel>
+              <StyledLabel>
+                <RadioInput
+                  type="radio"
+                  name="picked"
+                  value="Exams and coursework"
+                  onChange={handleChange}
+                  checked={values.picked === 'Exams and coursework'}
+                />
+                Exams and coursework
+              </StyledLabel>
+              <StyledLabel>
+                <RadioInput
+                  type="radio"
+                  name="picked"
+                  value="Culture, travel or hobby"
+                  onChange={handleChange}
+                  checked={values.picked === 'Culture, travel or hobby'}
+                />
+                Culture, travel or hobby
+              </StyledLabel>
+              <ErrorText name="picked" component="div" />
             </RadioGroup>
-            <Field name="fullname" placeholder="Full Name" as={StyledInput} />
-            <ErrorMessage name="fullname" component={ErrorText} />
-            <Field
+            <StyledInput
+              name="fullname"
+              placeholder={nameInputted ? '' : 'Full Name'}
+              onFocus={() => setNameInputted(true)}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.fullname}
+            />
+            <ErrorText name="fullname" component="div" />
+            <StyledInput
               type="email"
               name="email"
-              placeholder="Email"
-              as={StyledInput}
+              placeholder={emailInputted ? '' : 'Email'}
+              onFocus={() => setEmailInputted(true)}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.email}
             />
-            <ErrorMessage name="email" component={ErrorText} />
-            <Field
+            <ErrorText name="email" component="div" />
+            <StyledInput
               type="tel"
-              name="phoneNumber"
-              placeholder="Phone number"
-              as={StyledInput}
+              name="phoneNumber" // виправлено помилку в назві
+              placeholder={phoneInputted ? '' : 'Phone number'}
+              onFocus={() => setPhoneInputted(true)}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.phoneNumber}
             />
-            <ErrorMessage name="phoneNumber" component={ErrorText} />
-            <StyledButton type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Booking...' : 'Book'}
-            </StyledButton>
+            <ErrorText name="phoneNumber" component="div" />
+            <StyledButton type="submit">Book</StyledButton>
           </StyledForm>
         )}
       </Formik>
