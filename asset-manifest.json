@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/learnlingo/static/css/main.db317afe.css",
-    "main.js": "/learnlingo/static/js/main.d17e8476.js",
+    "main.js": "/learnlingo/static/js/main.cde26814.js",
     "static/js/885.1b0d5fa5.chunk.js": "/learnlingo/static/js/885.1b0d5fa5.chunk.js",
     "static/js/688.a801d606.chunk.js": "/learnlingo/static/js/688.a801d606.chunk.js",
     "static/js/532.61e4f441.chunk.js": "/learnlingo/static/js/532.61e4f441.chunk.js",
     "static/js/508.8e6c9e96.chunk.js": "/learnlingo/static/js/508.8e6c9e96.chunk.js",
-    "static/js/852.eeed4c05.chunk.js": "/learnlingo/static/js/852.eeed4c05.chunk.js",
+    "static/js/852.9ab07ec2.chunk.js": "/learnlingo/static/js/852.9ab07ec2.chunk.js",
     "static/media/girl.svg": "/learnlingo/static/media/girl.185dee334a8a98a1083cb04a4353cb67.svg",
     "static/media/iMac-yellow.svg": "/learnlingo/static/media/iMac-yellow.44161f5b1543242e79ab1df392ac44ab.svg",
     "index.html": "/learnlingo/index.html",
@@ -15,15 +15,15 @@
     "static/media/ukraine.svg": "/learnlingo/static/media/ukraine.b46d9da2bfad7002340ef8424027603b.svg",
     "static/media/close.svg": "/learnlingo/static/media/close.79c2124edd945aaf110064907aeca72b.svg",
     "main.db317afe.css.map": "/learnlingo/static/css/main.db317afe.css.map",
-    "main.d17e8476.js.map": "/learnlingo/static/js/main.d17e8476.js.map",
+    "main.cde26814.js.map": "/learnlingo/static/js/main.cde26814.js.map",
     "885.1b0d5fa5.chunk.js.map": "/learnlingo/static/js/885.1b0d5fa5.chunk.js.map",
     "688.a801d606.chunk.js.map": "/learnlingo/static/js/688.a801d606.chunk.js.map",
     "532.61e4f441.chunk.js.map": "/learnlingo/static/js/532.61e4f441.chunk.js.map",
     "508.8e6c9e96.chunk.js.map": "/learnlingo/static/js/508.8e6c9e96.chunk.js.map",
-    "852.eeed4c05.chunk.js.map": "/learnlingo/static/js/852.eeed4c05.chunk.js.map"
+    "852.9ab07ec2.chunk.js.map": "/learnlingo/static/js/852.9ab07ec2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.db317afe.css",
-    "static/js/main.d17e8476.js"
+    "static/js/main.cde26814.js"
   ]
 }
