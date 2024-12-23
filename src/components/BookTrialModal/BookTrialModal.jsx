@@ -1,8 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import toast from 'react-hot-toast';
 
-import { BookingLessonSchema } from 'yupSchemas/BookingLessonSchema'; // Шлях до вашої схеми валідації
+import { BookingLessonSchema } from 'yupSchemas/BookingLessonSchema';
 
 import {
   AvatarContainer,
@@ -21,30 +21,45 @@ import {
   TeacherInfoContainer,
   TeacherName,
   TeacherTitle,
-} from './BookTrialModal.styled'; // Шлях до файлу стилів
+} from './BookTrialModal.styled'; // Перевірте шлях!
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleBookingSubmission = async (values, { resetForm }) => {
-    setIsSubmitting(true);
-
+  const handleBookingSubmission = async (
+    values,
+    { resetForm, setSubmitting }
+  ) => {
     try {
-      console.log('Booking details:', values); // Тут буде ваш код для відправки даних
+      // Імітація успішної відправки (замініть на реальну логіку)
+      console.log('Form submitted:', values);
+      toast.success('Successfully finished!');
+      resetForm();
+      handleClose();
 
-      // Приклад збереження в localStorage (для демонстрації, в реальному додатку використовуйте бекенд)
-      const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
-      storedBookings.push(values);
-      localStorage.setItem('bookings', JSON.stringify(storedBookings));
+      // Реальна відправка на сервер (приклад):
+      /*
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Success:', data);
       toast.success('Booking successful!');
       resetForm();
       handleClose();
+      */
     } catch (error) {
       console.error('Booking error:', error);
       toast.error('Failed to submit the booking. Please try again.');
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false); // Важливо для розблокування кнопки
     }
   };
 
@@ -59,7 +74,7 @@ const BookTrialModal = ({ teacher, handleClose }) => {
         <AvatarImage
           src={teacher.avatar_url}
           loading="lazy"
-          alt="Teacher Avatar"
+          alt="avatar"
           width="44"
           height="44"
         />
@@ -84,10 +99,10 @@ const BookTrialModal = ({ teacher, handleClose }) => {
         validationSchema={BookingLessonSchema}
         onSubmit={handleBookingSubmission}
       >
-        {(
-          { isSubmitting } // Додано isSubmitting сюди для доступу всередині Form
-        ) => (
-          <Form>
+        {({ isSubmitting, handleSubmit }) => (
+          <StyledForm onSubmit={handleSubmit}>
+            {' '}
+            {/* onSubmit тут! */}
             <RadioGroup role="group" aria-labelledby="my-radio-group">
               {[
                 'Career and business',
@@ -97,16 +112,19 @@ const BookTrialModal = ({ teacher, handleClose }) => {
                 'Culture, travel or hobby',
               ].map(option => (
                 <StyledLabel key={option}>
-                  <Field type="radio" name="picked" value={option} />
+                  <Field
+                    type="radio"
+                    name="picked"
+                    value={option}
+                    as={RadioInput}
+                  />
                   {option}
                 </StyledLabel>
               ))}
               <ErrorMessage name="picked" component={ErrorText} />
             </RadioGroup>
-
             <Field name="fullname" placeholder="Full Name" as={StyledInput} />
             <ErrorMessage name="fullname" component={ErrorText} />
-
             <Field
               type="email"
               name="email"
@@ -114,7 +132,6 @@ const BookTrialModal = ({ teacher, handleClose }) => {
               as={StyledInput}
             />
             <ErrorMessage name="email" component={ErrorText} />
-
             <Field
               type="tel"
               name="phoneNumber"
@@ -122,11 +139,10 @@ const BookTrialModal = ({ teacher, handleClose }) => {
               as={StyledInput}
             />
             <ErrorMessage name="phoneNumber" component={ErrorText} />
-
             <StyledButton type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Booking...' : 'Book'}
             </StyledButton>
-          </Form>
+          </StyledForm>
         )}
       </Formik>
     </ModalContainer>
