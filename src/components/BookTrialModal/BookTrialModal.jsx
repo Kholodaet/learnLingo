@@ -24,29 +24,23 @@ import {
 } from './BookTrialModal.styled';
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false); // Статус кнопки
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBookingSubmission = async (values, { resetForm }) => {
-    setIsSubmitting(true); // Блокування кнопки під час відправки
+    setIsSubmitting(true);
 
     try {
-      // Зберігаємо бронювання в localStorage
-      const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
-      storedBookings.push(values);
-      localStorage.setItem('bookings', JSON.stringify(storedBookings));
+      console.log('Booking details:', values); // Placeholder for booking logic
+      // Тут має бути ваш код для відправки даних на сервер або інша логіка обробки бронювання
 
-      // Показуємо успішне повідомлення
       toast.success('Booking successful!');
-
-      // Очищаємо форму
       resetForm();
-
-      // Закриваємо модальне вікно
       handleClose();
     } catch (error) {
+      console.error('Booking error:', error);
       toast.error('Failed to submit the booking. Please try again.');
     } finally {
-      setIsSubmitting(false); // Розблокування кнопки
+      setIsSubmitting(false);
     }
   };
 
@@ -83,8 +77,8 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           email: '',
           phoneNumber: '',
         }}
-        onSubmit={handleBookingSubmission} // Використовуємо функцію відправки
-        validationSchema={BookingLessonSchema} // Валідація форми
+        onSubmit={handleBookingSubmission}
+        validationSchema={BookingLessonSchema}
       >
         {({
           values,
