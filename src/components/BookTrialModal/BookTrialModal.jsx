@@ -24,25 +24,18 @@ import {
 } from './BookTrialModal.styled';
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const [nameInputted, setNameInputted] = useState(false);
-  const [emailInputted, setEmailInputted] = useState(false);
-  const [phoneInputted, setPhoneInputted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // Додаємо стан для кнопки
 
   const handleBookingSubmission = async (values, { resetForm }) => {
     setIsSubmitting(true); // Блокування кнопки
 
     try {
-      // Отримуємо наявні дані з localStorage або ініціалізуємо порожній масив
-      const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      // Зберігаємо форму в localStorage
+      const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+      storedBookings.push(values);
+      localStorage.setItem('bookings', JSON.stringify(storedBookings));
 
-      // Додаємо нове бронювання в список
-      bookings.push(values);
-
-      // Зберігаємо оновлений список бронювань в localStorage
-      localStorage.setItem('bookings', JSON.stringify(bookings));
-
-      // Виводимо успішне повідомлення
+      // Показуємо повідомлення про успішне бронювання
       toast.success('Booking successful!');
 
       // Очищаємо форму
@@ -89,11 +82,18 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           email: '',
           phoneNumber: '',
         }}
-        onSubmit={handleBookingSubmission}
+        onSubmit={handleBookingSubmission} // Формуємо правильний сабміт
         validationSchema={BookingLessonSchema}
       >
-        {({ values, errors, touched, handleChange, handleBlur }) => (
-          <StyledForm>
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <StyledForm onSubmit={handleSubmit}>
             <RadioGroup role="group" aria-labelledby="my-radio-group">
               {[
                 'Career and business',
@@ -116,25 +116,25 @@ const BookTrialModal = ({ teacher, handleClose }) => {
             </RadioGroup>
             <StyledInput
               name="fullname"
-              placeholder={nameInputted ? '' : 'Full Name'}
-              onFocus={() => setNameInputted(true)}
+              placeholder="Full Name"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
             <ErrorText name="fullname" component="div" />
             <StyledInput
               type="email"
               name="email"
-              placeholder={emailInputted ? '' : 'Email'}
-              onFocus={() => setEmailInputted(true)}
+              placeholder="Email"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
             <ErrorText name="email" component="div" />
             <StyledInput
               type="tel"
               name="phoneNumber"
-              placeholder={phoneInputted ? '' : 'Phone number'}
-              onFocus={() => setPhoneInputted(true)}
+              placeholder="Phone number"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
             <ErrorText name="phoneNumber" component="div" />
             <StyledButton type="submit" disabled={isSubmitting}>
