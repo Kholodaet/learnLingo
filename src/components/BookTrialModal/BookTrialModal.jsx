@@ -24,18 +24,18 @@ import {
 } from './BookTrialModal.styled';
 
 const BookTrialModal = ({ teacher, handleClose }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false); // Додаємо стан для кнопки
+  const [isSubmitting, setIsSubmitting] = useState(false); // Статус кнопки
 
   const handleBookingSubmission = async (values, { resetForm }) => {
-    setIsSubmitting(true); // Блокування кнопки
+    setIsSubmitting(true); // Блокування кнопки під час відправки
 
     try {
-      // Зберігаємо форму в localStorage
+      // Зберігаємо бронювання в localStorage
       const storedBookings = JSON.parse(localStorage.getItem('bookings')) || [];
       storedBookings.push(values);
       localStorage.setItem('bookings', JSON.stringify(storedBookings));
 
-      // Показуємо повідомлення про успішне бронювання
+      // Показуємо успішне повідомлення
       toast.success('Booking successful!');
 
       // Очищаємо форму
@@ -61,7 +61,7 @@ const BookTrialModal = ({ teacher, handleClose }) => {
         <AvatarImage
           src={teacher.avatar_url}
           loading="lazy"
-          alt="avatar"
+          alt="Teacher Avatar"
           width="44"
           height="44"
         />
@@ -75,6 +75,7 @@ const BookTrialModal = ({ teacher, handleClose }) => {
       <QuestionTitle>
         What is your main reason for learning English?
       </QuestionTitle>
+
       <Formik
         initialValues={{
           picked: '',
@@ -82,8 +83,8 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           email: '',
           phoneNumber: '',
         }}
-        onSubmit={handleBookingSubmission} // Формуємо правильний сабміт
-        validationSchema={BookingLessonSchema}
+        onSubmit={handleBookingSubmission} // Використовуємо функцію відправки
+        validationSchema={BookingLessonSchema} // Валідація форми
       >
         {({
           values,
@@ -107,36 +108,53 @@ const BookTrialModal = ({ teacher, handleClose }) => {
                     type="radio"
                     name="picked"
                     value={option}
+                    checked={values.picked === option}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                   {option}
                 </StyledLabel>
               ))}
-              <ErrorText name="picked" component="div" />
+              {touched.picked && errors.picked && (
+                <ErrorText>{errors.picked}</ErrorText>
+              )}
             </RadioGroup>
+
             <StyledInput
               name="fullname"
               placeholder="Full Name"
               onChange={handleChange}
               onBlur={handleBlur}
+              value={values.fullname}
             />
-            <ErrorText name="fullname" component="div" />
+            {touched.fullname && errors.fullname && (
+              <ErrorText>{errors.fullname}</ErrorText>
+            )}
+
             <StyledInput
               type="email"
               name="email"
               placeholder="Email"
               onChange={handleChange}
               onBlur={handleBlur}
+              value={values.email}
             />
-            <ErrorText name="email" component="div" />
+            {touched.email && errors.email && (
+              <ErrorText>{errors.email}</ErrorText>
+            )}
+
             <StyledInput
               type="tel"
               name="phoneNumber"
               placeholder="Phone number"
               onChange={handleChange}
               onBlur={handleBlur}
+              value={values.phoneNumber}
             />
-            <ErrorText name="phoneNumber" component="div" />
+            {touched.phoneNumber && errors.phoneNumber && (
+              <ErrorText>{errors.phoneNumber}</ErrorText>
+            )}
+
             <StyledButton type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Booking...' : 'Book'}
             </StyledButton>
