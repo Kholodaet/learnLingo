@@ -29,7 +29,11 @@ const BookTrialModal = ({ teacher, handleClose }) => {
   const [phoneInputted, setPhoneInputted] = useState(false);
 
   const handleBookingSubmission = (values, { resetForm }) => {
-    toast.success('Successfully finished!');
+    const existingBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const updatedBookings = [...existingBookings, values];
+    localStorage.setItem('bookings', JSON.stringify(updatedBookings));
+
+    toast.success('Lesson booked successfully and saved locally!');
     resetForm();
     handleClose();
   };
@@ -64,65 +68,42 @@ const BookTrialModal = ({ teacher, handleClose }) => {
           picked: '',
           fullname: '',
           email: '',
-          phoneNumber: '', // виправлено помилку в назві
+          phoneNumber: '',
         }}
         onSubmit={handleBookingSubmission}
         validationSchema={BookingLessonSchema}
       >
-        {({ values, errors, touched, handleChange, handleBlur, resetForm }) => (
-          <StyledForm>
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <StyledForm onSubmit={handleSubmit}>
             <RadioGroup role="group" aria-labelledby="my-radio-group">
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Career and business"
-                  onChange={handleChange}
-                  checked={values.picked === 'Career and business'}
-                />
-                Career and business
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Lesson for kids"
-                  onChange={handleChange}
-                  checked={values.picked === 'Lesson for kids'}
-                />
-                Lesson for kids
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Living abroad"
-                  onChange={handleChange}
-                  checked={values.picked === 'Living abroad'}
-                />
-                Living abroad
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Exams and coursework"
-                  onChange={handleChange}
-                  checked={values.picked === 'Exams and coursework'}
-                />
-                Exams and coursework
-              </StyledLabel>
-              <StyledLabel>
-                <RadioInput
-                  type="radio"
-                  name="picked"
-                  value="Culture, travel or hobby"
-                  onChange={handleChange}
-                  checked={values.picked === 'Culture, travel or hobby'}
-                />
-                Culture, travel or hobby
-              </StyledLabel>
-              <ErrorText name="picked" component="div" />
+              {[
+                'Career and business',
+                'Lesson for kids',
+                'Living abroad',
+                'Exams and coursework',
+                'Culture, travel or hobby',
+              ].map(option => (
+                <StyledLabel key={option}>
+                  <RadioInput
+                    type="radio"
+                    name="picked"
+                    value={option}
+                    onChange={handleChange}
+                    checked={values.picked === option}
+                  />
+                  {option}
+                </StyledLabel>
+              ))}
+              {touched.picked && errors.picked && (
+                <ErrorText>{errors.picked}</ErrorText>
+              )}
             </RadioGroup>
             <StyledInput
               name="fullname"
@@ -132,7 +113,9 @@ const BookTrialModal = ({ teacher, handleClose }) => {
               onChange={handleChange}
               value={values.fullname}
             />
-            <ErrorText name="fullname" component="div" />
+            {touched.fullname && errors.fullname && (
+              <ErrorText>{errors.fullname}</ErrorText>
+            )}
             <StyledInput
               type="email"
               name="email"
@@ -142,17 +125,21 @@ const BookTrialModal = ({ teacher, handleClose }) => {
               onChange={handleChange}
               value={values.email}
             />
-            <ErrorText name="email" component="div" />
+            {touched.email && errors.email && (
+              <ErrorText>{errors.email}</ErrorText>
+            )}
             <StyledInput
               type="tel"
-              name="phoneNumber" // виправлено помилку в назві
+              name="phoneNumber"
               placeholder={phoneInputted ? '' : 'Phone number'}
               onFocus={() => setPhoneInputted(true)}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.phoneNumber}
             />
-            <ErrorText name="phoneNumber" component="div" />
+            {touched.phoneNumber && errors.phoneNumber && (
+              <ErrorText>{errors.phoneNumber}</ErrorText>
+            )}
             <StyledButton type="submit">Book</StyledButton>
           </StyledForm>
         )}
